@@ -1,189 +1,225 @@
-# 📌 AI Attendance Tracker using YOLOv8 & OpenCV
+# 🤖 AI Attendance Tracker using YOLOv8 & OpenCV
 
-## 📖 Overview
+![AI Attendance Tracker](https://img.shields.io/badge/AI-YOLOv8-green)
+![Python](https://img.shields.io/badge/Python-3.8+-blue)
+![Streamlit](https://img.shields.io/badge/Deployed-Streamlit-red)
 
-AI Attendance Tracker is a computer vision-based attendance detection system that automatically detects and counts people from meeting screenshots or images using **YOLOv8 object detection** and **OpenCV**.
+An AI-powered automated attendance tracking system that uses **YOLOv8 object detection** and **OpenCV** to detect and count people from classroom/meeting screenshots.
 
-The project uses deep learning techniques to identify attendees, draw detection bounding boxes, and generate an automated attendance count without manual effort.
+The project provides a modern interactive dashboard where users can upload an image, run AI-based person detection, visualize detected attendees, and instantly calculate attendance.
 
 ---
 
-# 🚀 Features
+# 🌐 Live Demo
 
-- ✅ AI-based person detection
-- ✅ Automated attendance counting
-- ✅ YOLOv8 deep learning model integration
-- ✅ OpenCV image processing
-- ✅ Bounding box visualization
-- ✅ Fast and lightweight detection
-- ✅ Works with meeting screenshots/images
-- ✅ Easy local deployment
+🚀 Try the deployed application:
+
+https://attendance-tracker-qtjbpju7v5jjsapptpnrxtw.streamlit.app/
+
+---
+
+# ✨ Features
+
+## 🧠 AI Vision
+
+- YOLOv8 based person detection
+- Deep learning powered attendance estimation
+- Real-time image analysis
+
+
+## 📊 Smart Dashboard
+
+- Modern AI themed interface
+- Interactive confidence control
+- Detection visualization
+- Attendance statistics
+
+
+## ⚡ Performance
+
+- Fast inference
+- Lightweight YOLOv8 Nano model
+- Cloud deployed application
+
+
+---
+
+# 🖥️ Application Preview
+
+The system workflow:
+
+```
+Upload Meeting Image
+
+        ↓
+
+YOLOv8 Detection Engine
+
+        ↓
+
+Person Identification
+
+        ↓
+
+Bounding Box Generation
+
+        ↓
+
+Attendance Count
+```
 
 ---
 
 # 🛠️ Tech Stack
 
-| Technology | Usage |
-|------------|-------|
-| Python | Core development |
+| Technology | Purpose |
+|---|---|
+| Python | Backend development |
+| YOLOv8 | Object detection |
 | OpenCV | Image processing |
-| YOLOv8 | Person detection |
 | Ultralytics | YOLO framework |
-| Deep Learning | Object recognition |
+| Streamlit | Web application |
+| NumPy | Data processing |
+| Pillow | Image handling |
 
 ---
 
 # 📂 Project Structure
 
 ```
-Attendance Tracker/
+Attendance-Tracker/
+
 │
-├── attendance_tracker.py     # Main application
-├── meeting_grid.jpg          # Input meeting screenshot/image
-├── yolov8n.pt                # YOLOv8 trained model
-└── README.md                 # Project documentation
+├── app.py                    # Streamlit application
+├── attendance_tracker.py     # Local detection script
+├── yolov8n.pt                # YOLOv8 model
+├── requirements.txt          # Dependencies
+├── README.md                 # Documentation
+└── meeting_grid.jpg          # Sample input
 ```
 
 ---
 
-# ⚙️ Installation Guide
+# ⚙️ Installation
 
-## Step 1: Clone Repository
+Clone the repository:
 
 ```bash
-git clone https://github.com/AYUSHMSINGH2004/Attendance-Tracker.git
+git clone https://github.com/your-username/Attendance-Tracker.git
 
-cd attendance-tracker
+cd Attendance-Tracker
 ```
 
----
-
-## Step 2: Install Dependencies
-
-Make sure Python 3.8 or above is installed.
-
-Install required libraries:
+Install dependencies:
 
 ```bash
-pip install opencv-python ultralytics
+pip install -r requirements.txt
 ```
 
 ---
 
-# ▶️ Running the Project
+# ▶️ Run Locally
 
-Run the application:
+Start the Streamlit application:
 
 ```bash
-python attendance_tracker.py
+streamlit run app.py
 ```
 
-The system will:
-
-1. Load the input image
-2. Detect people using YOLOv8
-3. Draw bounding boxes
-4. Count detected attendees
-5. Display attendance result
-
----
-
-# 🧠 Working Pipeline
+Open:
 
 ```
-Input Image
-      |
-      ↓
-OpenCV Processing
-      |
-      ↓
-YOLOv8 Object Detection
-      |
-      ↓
-Person Detection
-      |
-      ↓
-Attendance Calculation
-      |
-      ↓
-Output with Detection Boxes
+http://localhost:8501
 ```
 
 ---
 
-# 📸 Output
+# 🚀 Deployment
 
-The model detects all visible people in the image and generates:
+The application is deployed using **Streamlit Cloud**.
 
-- Person detection boxes
-- Number of detected attendees
-- Processed output visualization
-
-
-Example:
+Deployment flow:
 
 ```
-Total Attendance: 15
+GitHub Repository
+
+        ↓
+
+Streamlit Cloud
+
+        ↓
+
+Live AI Web Application
+```
+
+Live URL:
+
+```
+https://attendance-tracker-qtjbpju7v5jjsapptpnrxtw.streamlit.app/
 ```
 
 ---
 
-# 🤖 Model Details
+# 🧠 How It Works
+
+1. User uploads a meeting/classroom image
+
+2. Image is processed using OpenCV
+
+3. YOLOv8 detects human objects
+
+4. Detected people are highlighted
+
+5. System calculates total attendance
+
+---
+
+# 🎯 Model Information
 
 This project uses:
 
 ## YOLOv8 Nano
 
-YOLOv8n is selected because it provides:
+Advantages:
 
-- High-speed detection
-- Low resource usage
-- Real-time inference capability
-- Good accuracy for person detection
+- Fast detection speed
+- Low computational requirements
+- Suitable for real-time applications
+- Optimized for deployment
 
 ---
 
-# 🔮 Future Improvements
+# 📈 Future Enhancements
 
-Planned upgrades:
+Possible improvements:
 
-- [ ] Face recognition attendance
+- [ ] Face recognition based attendance
 - [ ] Student database integration
-- [ ] Attendance history storage
-- [ ] Web dashboard
-- [ ] Live video meeting attendance
-- [ ] Cloud deployment
-- [ ] Multiple classroom/session support
+- [ ] Attendance history dashboard
+- [ ] Export attendance reports
+- [ ] Live camera attendance
+- [ ] User authentication
+- [ ] Cloud database integration
 
 ---
 
-# 🤝 Contribution Guidelines
+# 🤝 Contributing
 
 Contributions are welcome.
 
 Steps:
 
-1. Fork this repository
-
-2. Create a new branch:
-
 ```bash
+git clone repository
+
 git checkout -b feature-name
-```
 
-3. Commit changes:
+git commit -m "Added feature"
 
-```bash
-git commit -m "Added new feature"
-```
-
-4. Push branch:
-
-```bash
 git push origin feature-name
 ```
 
-5. Open a Pull Request
+Create a Pull Request.
 
 ---
 
@@ -198,15 +234,13 @@ This project is licensed under the MIT License.
 **Ayush M Singh**
 
 GitHub:
+
 ```
-https://github.com/AYUSHMSINGH2004
+https://github.com/your-username
 ```
 
 ---
 
 # ⭐ Support
 
-If you like this project, consider giving it a ⭐ on GitHub.
-
----
-
+If you like this project, consider giving it a star ⭐
