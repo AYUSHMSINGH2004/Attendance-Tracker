@@ -51,7 +51,7 @@ Attendance Tracker/
 ## Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/your-username/attendance-tracker.git
+git clone https://github.com/AYUSHMSINGH2004/Attendance-Tracker.git
 
 cd attendance-tracker
 ```
@@ -195,11 +195,11 @@ This project is licensed under the MIT License.
 
 # 👨‍💻 Author
 
-**Your Name**
+**Ayush M Singh**
 
 GitHub:
 ```
-https://github.com/your-username
+https://github.com/AYUSHMSINGH2004
 ```
 
 ---
@@ -210,24 +210,3 @@ If you like this project, consider giving it a ⭐ on GitHub.
 
 ---
 
-## GitHub Repository Description
-
-AI-powered attendance tracking system using YOLOv8 and OpenCV to automatically detect and count attendees from meeting images with real-time computer vision.
-
----
-
-## GitHub Topics
-
-```
-python
-opencv
-yolo
-yolov8
-computer-vision
-deep-learning
-artificial-intelligence
-object-detection
-machine-learning
-attendance-system
-ai-project
-```
