@@ -105,7 +105,7 @@ Attendance-Tracker/
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/Attendance-Tracker.git
+git clone https://github.com/AYUSHMSINGH2004/Attendance-Tracker.git
 
 cd Attendance-Tracker
 ```
@@ -236,7 +236,7 @@ This project is licensed under the MIT License.
 GitHub:
 
 ```
-https://github.com/your-username
+https://github.com/AYUSHMSINGH2004
 ```
 
 ---
