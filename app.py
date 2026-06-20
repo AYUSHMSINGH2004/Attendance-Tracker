@@ -4,10 +4,9 @@ from ultralytics import YOLO
 from PIL import Image
 import numpy as np
 import os
-import time
 
 
-# ---------------- PAGE CONFIG ---------------- #
+# ================= PAGE CONFIG =================
 
 st.set_page_config(
     page_title="AI Attendance Tracker",
@@ -16,14 +15,12 @@ st.set_page_config(
 )
 
 
-# ---------------- CUSTOM CSS ---------------- #
+# ================= CUSTOM CSS =================
 
 st.markdown(
 """
 <style>
 
-
-/* Main Background */
 
 .stApp {
 
@@ -40,15 +37,35 @@ color:white;
 }
 
 
-/* Title */
+
+[data-testid="stSidebar"] {
+
+
+background:
+
+linear-gradient(
+180deg,
+#141E30,
+#243B55
+);
+
+
+}
+
+
 
 .title {
 
+
 font-size:55px;
+
 font-weight:900;
+
 text-align:center;
 
+
 background:
+
 linear-gradient(
 90deg,
 #00F5A0,
@@ -56,15 +73,18 @@ linear-gradient(
 #FF61D2
 );
 
+
 -webkit-background-clip:text;
+
 color:transparent;
+
 
 }
 
 
-/* Subtitle */
 
 .subtitle {
+
 
 text-align:center;
 
@@ -72,10 +92,9 @@ font-size:22px;
 
 color:#d9faff;
 
+
 }
 
-
-/* Cards */
 
 
 .card {
@@ -101,9 +120,6 @@ backdrop-filter:
 blur(15px);
 
 
-margin:15px;
-
-
 }
 
 
@@ -111,9 +127,9 @@ margin:15px;
 .metric {
 
 
-font-size:40px;
+font-size:45px;
 
-font-weight:bold;
+font-weight:900;
 
 text-align:center;
 
@@ -124,7 +140,6 @@ color:#00F5A0;
 }
 
 
-/* Buttons */
 
 .stButton button {
 
@@ -138,23 +153,14 @@ linear-gradient(
 );
 
 
-color:black;
-
-
-font-size:18px;
-
-
 border-radius:20px;
-
-
-padding:12px 30px;
-
 
 font-weight:bold;
 
+color:black;
+
 
 }
-
 
 
 </style>
@@ -165,13 +171,25 @@ unsafe_allow_html=True
 
 
 
-# ---------------- MODEL ---------------- #
+# ================= LOAD MODEL =================
+
 
 @st.cache_resource
-
 def load_model():
 
-    return YOLO("yolov8n.pt")
+    model_path = "yolov8n.pt"
+
+
+    if not os.path.exists(model_path):
+
+        st.error(
+            "YOLO model file missing!"
+        )
+
+        st.stop()
+
+
+    return YOLO(model_path)
 
 
 
@@ -179,9 +197,11 @@ model = load_model()
 
 
 
-# ---------------- HEADER ---------------- #
+# ================= HEADER =================
+
 
 st.markdown(
+
 """
 <div class="title">
 
@@ -192,13 +212,14 @@ st.markdown(
 
 <div class="subtitle">
 
-YOLOv8 + Computer Vision Powered Smart Attendance System
+YOLOv8 • Computer Vision • Smart Attendance Detection
 
 </div>
 
 """,
 
 unsafe_allow_html=True
+
 )
 
 
@@ -206,50 +227,63 @@ st.write("")
 
 
 
-# ---------------- SIDEBAR ---------------- #
+# ================= SIDEBAR =================
+
 
 with st.sidebar:
 
 
     st.markdown(
-    """
-    ## ⚙️ Control Panel
-
-    Upload a meeting screenshot.
-
-    The AI will:
-
-    ✅ Detect people
-
-    ✅ Draw bounding boxes
-
-    ✅ Calculate attendance
 
     """
+
+    # ⚙️ AI Controls
+
+
+    Adjust detection sensitivity.
+
+
+    Higher confidence = fewer but more accurate detections.
+
+
+    """
+
     )
-
 
 
     confidence = st.slider(
-        "Detection Confidence",
-        0.1,
-        1.0,
-        0.5
+
+        "🎯 Detection Confidence",
+
+        min_value=0.10,
+
+        max_value=0.90,
+
+        value=0.45,
+
+        step=0.05
+
+    )
+
+
+    st.write(
+        f"Current threshold: {confidence}"
     )
 
 
 
-# ---------------- UPLOAD ---------------- #
+# ================= UPLOAD =================
+
 
 uploaded_file = st.file_uploader(
 
-"📸 Upload Meeting Image",
+    "📸 Upload Meeting Screenshot",
 
-type=[
-"jpg",
-"jpeg",
-"png"
-]
+    type=[
+        "jpg",
+        "jpeg",
+        "png"
+    ]
 
 )
 
@@ -259,6 +293,7 @@ if uploaded_file:
 
 
     image = Image.open(uploaded_file)
+
 
 
     img = np.array(image)
@@ -273,47 +308,58 @@ if uploaded_file:
 
 
         st.markdown(
+
         '<div class="card">',
+
         unsafe_allow_html=True
+
         )
 
 
         st.subheader(
-        "📷 Original Image"
+            "📷 Original Image"
         )
 
 
         st.image(
+
             img,
+
             use_container_width=True
+
         )
 
 
         st.markdown(
+
         "</div>",
+
         unsafe_allow_html=True
+
         )
 
 
 
-    # -------- DETECTION -------- #
+
+    # ================= DETECTION =================
 
 
     with st.spinner(
-        "🧠 AI is analyzing image..."
+        "🧠 AI analyzing image..."
     ):
 
 
-        time.sleep(1)
-
-
         results = model(
+
             img,
+
             conf=confidence
+
         )
 
 
-        attendance=0
+
+        attendance = 0
 
 
 
@@ -323,37 +369,41 @@ if uploaded_file:
             for box in result.boxes:
 
 
-
-                cls=int(box.cls[0])
-
-
-
-                if cls==0:
+                class_id = int(
+                    box.cls[0]
+                )
 
 
+                # Person class
 
-                    attendance+=1
+                if class_id == 0:
+
+
+                    attendance += 1
 
 
 
                     x1,y1,x2,y2 = map(
-                    int,
-                    box.xyxy[0]
+
+                        int,
+
+                        box.xyxy[0]
+
                     )
 
 
 
                     cv2.rectangle(
 
-                    img,
+                        img,
 
-                    (x1,y1),
+                        (x1,y1),
 
-                    (x2,y2),
+                        (x2,y2),
 
-                    (0,255,150),
+                        (0,255,150),
 
-                    3
+                        3
 
                     )
 
@@ -361,21 +411,22 @@ if uploaded_file:
 
                     cv2.putText(
 
-                    img,
+                        img,
 
-                    "Person",
+                        "Person",
 
-                    (x1,y1-10),
+                        (x1,y1-10),
 
-                    cv2.FONT_HERSHEY_SIMPLEX,
+                        cv2.FONT_HERSHEY_SIMPLEX,
 
-                    0.7,
+                        0.7,
 
-                    (255,255,255),
+                        (255,255,255),
 
-                    2
+                        2
 
                     )
+
 
 
 
@@ -384,45 +435,52 @@ if uploaded_file:
 
 
         st.markdown(
+
         '<div class="card">',
+
         unsafe_allow_html=True
+
         )
 
 
         st.subheader(
-        "🎯 AI Detection Result"
+
+            "🎯 AI Detection Result"
+
         )
 
 
         st.image(
+
             img,
+
             use_container_width=True
+
         )
 
 
         st.markdown(
+
         "</div>",
+
         unsafe_allow_html=True
+
         )
 
 
 
 
-
-# ---------------- METRICS ---------------- #
-
-
-if uploaded_file:
+    # ================= METRICS =================
 
 
     st.write("")
 
 
-    c1,c2,c3 = st.columns(3)
+    a,b,c = st.columns(3)
 
 
 
-    with c1:
+    with a:
 
 
         st.markdown(
@@ -437,7 +495,9 @@ if uploaded_file:
 
         </div>
 
-        👥 Total Attendance
+
+        👥 Attendance
+
 
         </div>
 
@@ -449,8 +509,7 @@ if uploaded_file:
 
 
 
-
-    with c2:
+    with b:
 
 
         st.markdown(
@@ -463,11 +522,15 @@ if uploaded_file:
 
         YOLOv8
 
-        </div>
-
-        🧠 AI Model
 
         </div>
+
+
+        🧠 Model
+
+
+        </div>
+
 
         """,
 
@@ -477,9 +540,7 @@ if uploaded_file:
 
 
 
-
-
-    with c3:
+    with c:
 
 
         st.markdown(
@@ -488,13 +549,16 @@ if uploaded_file:
 
         <div class="card">
 
+
         <div class="metric">
 
         LIVE
 
         </div>
 
+
         ⚡ Detection
+
 
         </div>
 
@@ -503,6 +567,7 @@ if uploaded_file:
         unsafe_allow_html=True
 
         )
+
 
 
 else:
@@ -518,10 +583,11 @@ else:
     👋 Welcome!
 
 
-    Upload a meeting screenshot to start AI attendance detection.
+    Upload a meeting screenshot and let AI count attendees automatically.
 
 
     </div>
+
 
     """,
 
